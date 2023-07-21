@@ -14,6 +14,7 @@ import Page from '../../components/Page';
 import useDashboard from '../../hooks/useDashboard';
 import { DashboardNavLayout } from '../../layouts/dashboard/DashboardNavbar';
 import MiddleForm from './components/MiddleForm';
+
 // import { validationSchema } from './type';
 
 const CreateProduct = () => {
@@ -37,7 +38,9 @@ const CreateProduct = () => {
   const { handleSubmit, reset, watch } = methods;
 
   const onSubmit = async (values: TProductCreate) => {
-    const data = { ...values };
+    const data = {
+      ...values
+    };
     if (data.type === ProductTypeEnum.CHILD) {
       await productApi
         .getById(data.parentProductId)

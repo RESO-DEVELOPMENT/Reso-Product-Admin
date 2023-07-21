@@ -15,6 +15,7 @@ export type TProduct = {
   parentProductId?: string;
   brandId?: string;
   categoryId?: string;
+  editorState?: any;
 };
 
 export type TProductCreate = {

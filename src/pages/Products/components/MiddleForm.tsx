@@ -1,14 +1,14 @@
 import { Box, Grid, Stack } from '@mui/material';
 
-import { InputField, SelectField, UploadImageField } from 'components/form';
+import { InputField, SelectField, UploadImageField, DraftEditorField } from 'components/form';
 
 // import useExtraCategory from 'hooks/extra-categories/useExtraCategoy';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, Controller } from 'react-hook-form';
 import {
   PRODUCT_SIZE_OPTIONS,
   PRODUCT_TYPE_OPTIONS,
   ProductTypeEnum,
-  TProduct
+  TProductCreate
 } from 'types/product';
 import { Card, CardTitle } from './Card';
 import AutocompleteCategory from 'components/form/common/Category/AutocompleteCategory';
@@ -21,7 +21,8 @@ type Props = {
 
 // eslint-disable-next-line arrow-body-style
 const MiddleForm: React.FC<Props> = ({ updateMode, isCombo = false }) => {
-  const { watch } = useFormContext<TProduct>();
+  const { watch, getValues } = useFormContext<TProductCreate>();
+
   const productType = watch('type');
   console.log('productType', productType);
   return (
@@ -60,7 +61,6 @@ const MiddleForm: React.FC<Props> = ({ updateMode, isCombo = false }) => {
                   </Grid>
                   <Grid item xs={6}>
                     <InputField
-                      disabled={productType === ProductTypeEnum.CHILD}
                       fullWidth
                       name="name"
                       label="Tên sản phẩm"
@@ -94,46 +94,41 @@ const MiddleForm: React.FC<Props> = ({ updateMode, isCombo = false }) => {
                       size="small"
                     />
                   </Grid>
-                  {(productType === ProductTypeEnum.CHILD ||
-                    productType === ProductTypeEnum.SINGLE ||
-                    productType === ProductTypeEnum.EXTRA ||
-                    productType === ProductTypeEnum.COMBO) && (
-                    <>
-                      <Grid item xs={4}>
-                        <InputField
-                          fullWidth
-                          type="number"
-                          name="sellingPrice"
-                          label="Giá bán"
-                          required
-                          size="small"
-                          helperText="Giá bán của sản phẩm"
-                        />
-                      </Grid>
-                      <Grid item xs={4}>
-                        <InputField
-                          fullWidth
-                          type="number"
-                          name="discountPrice"
-                          label="Giá giảm"
-                          required
-                          size="small"
-                          helperText="Giá giảm của sản phẩm"
-                        />
-                      </Grid>
-                      <Grid item xs={4}>
-                        <InputField
-                          fullWidth
-                          type="number"
-                          name="historicalPrice"
-                          label="Giá gốc"
-                          required
-                          size="small"
-                          helperText="Chi phí sản xuất sản phẩm"
-                        />
-                      </Grid>
-                    </>
-                  )}
+                  <>
+                    <Grid item xs={4}>
+                      <InputField
+                        fullWidth
+                        type="number"
+                        name="sellingPrice"
+                        label="Giá bán"
+                        required
+                        size="small"
+                        helperText="Giá bán của sản phẩm"
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <InputField
+                        fullWidth
+                        type="number"
+                        name="discountPrice"
+                        label="Giá giảm"
+                        required
+                        size="small"
+                        helperText="Giá giảm của sản phẩm"
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <InputField
+                        fullWidth
+                        type="number"
+                        name="historicalPrice"
+                        label="Giá gốc"
+                        required
+                        size="small"
+                        helperText="Chi phí sản xuất sản phẩm"
+                      />
+                    </Grid>
+                  </>
                   {(productType === ProductTypeEnum.SINGLE ||
                     productType === ProductTypeEnum.PARENT ||
                     productType === ProductTypeEnum.COMBO) && (
@@ -175,7 +170,16 @@ const MiddleForm: React.FC<Props> = ({ updateMode, isCombo = false }) => {
                     </Grid>
                   )}
                   <Grid item xs={12}>
-                    <InputField fullWidth name="description" label="Mô tả" required size="small" />
+                    <Controller
+                      name={`editorState`}
+                      render={({ field }) => (
+                        <DraftEditorField
+                          updateMode={updateMode}
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                      )}
+                    />
                   </Grid>
                 </Grid>
               </Box>

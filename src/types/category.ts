@@ -10,6 +10,7 @@ export type TCategory = {
   picUrl: string;
   status: CategoryStatus;
   brandId: string;
+  editorState?: any;
 };
 export interface TCategoryCreate {
   code: string;

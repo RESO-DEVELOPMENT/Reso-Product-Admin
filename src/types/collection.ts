@@ -24,6 +24,7 @@ export type TCollection = {
   picUrl: string;
   description: string;
   products: TProductInCollection[];
+  editorState?: any;
 };
 export enum CollectionStatus {
   ACTIVE = 'Active',

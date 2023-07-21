@@ -12,7 +12,7 @@ import DateTimePickerField from 'components/form/DateTimePickerField';
 import useLocales from 'hooks/useLocales';
 import { Card, CardTitle } from 'pages/promotionEngine/Promotion/components/Card';
 import { useState } from 'react';
-import { Controller } from 'react-hook-form';
+import { useFormContext, Controller } from 'react-hook-form';
 
 import {
   discountActionList,
@@ -25,6 +25,7 @@ import {
 import FormBox from 'pages/promotionEngine/Promotion/components/FormBox';
 
 export default function StepOne({ watch }: any) {
+  const { getValues } = useFormContext();
   const { translate } = useLocales();
   const giftAction = giftActionList();
   const discountAction = discountActionList();
@@ -204,8 +205,10 @@ export default function StepOne({ watch }: any) {
           {`${translate('promotionSystem.promotion.description')}`}
         </CardTitle>
         <Controller
-          name="description"
-          render={({ field }) => <DraftEditorField value={field.value} onChange={field.onChange} />}
+          name="editorState"
+          render={({ field }) => (
+            <DraftEditorField updateMode={false} value={field.value} onChange={field.onChange} />
+          )}
         />
       </Card>
     </Stack>
