@@ -42,7 +42,7 @@ const CategoryInfoTab = ({ updateMode, category, isLoading }: Props) => {
 
   useEffect(() => {
     if (!category) return;
-    updateCategoryForm.reset({ ...category });
+    updateCategoryForm.reset({ ...category, editorState: category.description });
   }, [category, updateCategoryForm]);
 
   const onSubmit = (values: TCategory) => {

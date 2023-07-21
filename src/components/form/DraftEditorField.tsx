@@ -7,15 +7,17 @@ import React, { useMemo } from 'react';
 interface Props extends Omit<DEditorProps, 'onChange'> {
   value: string | EditorState;
   onChange: (value: EditorState) => any;
+  updateMode?: boolean | undefined;
 }
-
-const DraftEditorField = ({ value, onChange, ...props }: Props) => {
+const DraftEditorField = ({ value, onChange, updateMode, ...props }: Props) => {
   const editorState = useMemo(() => {
-    if (!value) return EditorState.createEmpty();
+    if (!value && !updateMode) return EditorState.createEmpty();
     if (value instanceof EditorState) {
       return value;
     }
+
     const html = value;
+
     const contentBlock = htmlToDraft(html ?? '');
     if (contentBlock) {
       const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);

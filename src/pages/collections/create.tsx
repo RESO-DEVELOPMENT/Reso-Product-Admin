@@ -1,7 +1,7 @@
 // import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Card, Grid, Stack, Typography } from '@mui/material';
 import collectionApi from 'api/collection';
-import { InputField, UploadImageField } from 'components/form';
+import { InputField, UploadImageField, DraftEditorField } from 'components/form';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 // import ModalProductForm from 'components/ModalProductForm/ModalProductForm';
 import Page from 'components/Page';
@@ -12,7 +12,7 @@ import { DashboardNavLayout } from 'layouts/dashboard/DashboardNavbar';
 import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
 import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, Controller } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
@@ -159,13 +159,23 @@ const CreateCollectionPage = () => {
                       <InputField fullWidth name="code" label="Mã rút gọn" />
                     </Grid>
                     <Grid item xs={12} sm={12}>
-                      <InputField
+                      {/* <InputField
                         size="small"
                         rows={4}
                         multiline
                         fullWidth
                         name="description"
                         label={translate('collections.table.description')}
+                      /> */}
+                      <Controller
+                        name={`editorState`}
+                        render={({ field }) => (
+                          <DraftEditorField
+                            updateMode={false}
+                            value={field.value}
+                            onChange={field.onChange}
+                          />
+                        )}
                       />
                     </Grid>
                   </Grid>

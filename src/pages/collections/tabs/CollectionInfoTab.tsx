@@ -2,10 +2,11 @@ import { Box, Grid } from '@mui/material';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/store';
-import { InputField, UploadImageField } from 'components/form';
+import { InputField, UploadImageField, DraftEditorField } from 'components/form';
 import LoadingAsyncButton from 'components/LoadingAsyncButton/LoadingAsyncButton';
 import useLocales from 'hooks/useLocales';
 import { Card, CardTitle } from '../../Products/components/Card';
+import { Controller } from 'react-hook-form';
 
 const marks = [
   {
@@ -39,13 +40,23 @@ const CollectionInfoTab = ({ onSubmit }: { onSubmit: Function }) => {
                 <InputField label="Mã bộ sưu tập" disabled name="code" fullWidth />
               </Grid>
               <Grid item xs={12} sm={12}>
-                <InputField
+                {/* <InputField
                   size="small"
                   rows={4}
                   multiline
                   fullWidth
                   name="description"
                   label="Mô tả"
+                /> */}
+                <Controller
+                  name={`editorState`}
+                  render={({ field }) => (
+                    <DraftEditorField
+                      updateMode={true}
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                  )}
                 />
               </Grid>
             </Grid>

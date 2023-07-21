@@ -53,7 +53,7 @@ const UpdateCollectionPage = () => {
 
   useEffect(() => {
     if (collection) {
-      form.reset(collection);
+      form.reset({ ...collection, editorState: collection.description });
     }
   }, [collection, form]);
   const onUpdateCollection = (values: TCollection) =>

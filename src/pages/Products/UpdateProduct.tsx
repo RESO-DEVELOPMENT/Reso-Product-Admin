@@ -83,7 +83,8 @@ const UpdateProduct = () => {
   const { translate } = useLocales();
 
   const { data: productDetails, isLoading, error } = useProductDetail(id!);
-  console.log('productDetails', productDetails);
+
+  // console.log('productDetails', productDetails);
 
   // const { reset: menuReset, handleSubmit: handleSubmitMenuForm } = menuForm;
   // useEffect(() => {
@@ -121,11 +122,12 @@ const UpdateProduct = () => {
   const form = useForm<TProduct>({
     // resolver: yupResolver(validationSchema),
   });
-  const { handleSubmit, reset } = form;
+  const { handleSubmit, reset, getValues } = form;
 
   useEffect(() => {
     if (!productDetails) return;
-    form.reset({ ...productDetails });
+
+    form.reset({ ...productDetails, editorState: productDetails.description });
   }, [productDetails, form]);
 
   const onSubmit = (values: TProduct) => {
