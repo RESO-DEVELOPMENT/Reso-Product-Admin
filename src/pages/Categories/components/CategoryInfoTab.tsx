@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { TCategory } from 'types/category';
+
 import * as yup from 'yup';
 
 interface Props {
@@ -42,13 +43,13 @@ const CategoryInfoTab = ({ updateMode, category, isLoading }: Props) => {
 
   useEffect(() => {
     if (!category) return;
-    updateCategoryForm.reset({ ...category, editorState: category.description });
+    updateCategoryForm.reset({ ...category });
   }, [category, updateCategoryForm]);
 
   const onSubmit = (values: TCategory) => {
     console.log(`data`, values);
     return categoryApi
-      .update(category?.id, transformDraftToStr(values))
+      .update(category?.id, transformDraftToStr({ ...transformDraftToStr({ ...values }) }))
       .then((res) => {
         enqueueSnackbar(`Cập nhật thành công`, {
           variant: 'success'

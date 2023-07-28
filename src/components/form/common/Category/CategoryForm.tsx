@@ -32,7 +32,7 @@ const CategoryForm = ({ updateMode }: Props) => {
       </Grid>
       <Grid item xs={12}>
         <Controller
-          name={`editorState`}
+          name={`description`}
           render={({ field }) => (
             <DraftEditorField
               updateMode={updateMode}

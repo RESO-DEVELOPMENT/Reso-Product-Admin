@@ -18,6 +18,7 @@ import { useSearchParams } from 'react-router-dom';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { CollectionTypeEnum, TCollection } from 'types/collection';
 import * as yup from 'yup';
+import { transformDraftToStr } from 'pages/Products/utils';
 // import AddProductTable from './AddProductTable';
 
 const marks = [
@@ -81,7 +82,7 @@ const CreateCollectionPage = () => {
   const onSubmit = (values: TCollection) => {
     console.log('collecttionCreate ', values);
     collectionApi
-      .create(values)
+      .create({ ...transformDraftToStr({ ...values }) })
       .then((res) => {
         enqueueSnackbar(`Thêm thành công`, {
           variant: 'success'
@@ -168,7 +169,7 @@ const CreateCollectionPage = () => {
                         label={translate('collections.table.description')}
                       /> */}
                       <Controller
-                        name={`editorState`}
+                        name={`description`}
                         render={({ field }) => (
                           <DraftEditorField
                             updateMode={false}
