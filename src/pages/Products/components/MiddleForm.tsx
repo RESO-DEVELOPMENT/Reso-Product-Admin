@@ -171,7 +171,7 @@ const MiddleForm: React.FC<Props> = ({ updateMode, isCombo = false }) => {
                   )}
                   <Grid item xs={12}>
                     <Controller
-                      name={`editorState`}
+                      name={`description`}
                       render={({ field }) => (
                         <DraftEditorField
                           updateMode={updateMode}

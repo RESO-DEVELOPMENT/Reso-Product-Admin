@@ -13,6 +13,7 @@ import { TCategoryCreate } from 'types/category';
 import * as yup from 'yup';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { transformDraftToStr } from 'pages/Products/utils';
 
 interface Props {}
 
@@ -38,7 +39,7 @@ const CreateCategory = (props: Props) => {
 
   const onSubmit = (values: TCategoryCreate) => {
     return categoryApi
-      .create(values)
+      .create({ ...transformDraftToStr({ ...values }) })
       .then((res) => {
         enqueueSnackbar(`Tạo thành công`, {
           variant: 'success'

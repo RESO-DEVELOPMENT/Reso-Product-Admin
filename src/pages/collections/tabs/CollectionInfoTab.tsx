@@ -49,7 +49,7 @@ const CollectionInfoTab = ({ onSubmit }: { onSubmit: Function }) => {
                   label="Mô tả"
                 /> */}
                 <Controller
-                  name={`editorState`}
+                  name={`description`}
                   render={({ field }) => (
                     <DraftEditorField
                       updateMode={true}

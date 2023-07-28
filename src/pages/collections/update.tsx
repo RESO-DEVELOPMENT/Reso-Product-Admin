@@ -15,6 +15,7 @@ import { TCollection } from 'types/collection';
 import CollectionInfoTab from './tabs/CollectionInfoTab';
 import ProductInCollectionTab from './tabs/ProductInCollectionTab';
 import { useCollectionDetails } from 'hooks/useCollections';
+import { transformDraftToStr } from 'pages/Products/utils';
 
 enum TabType {
   COLLECTION_INFO = 'COLLETION_INFO',
@@ -53,11 +54,11 @@ const UpdateCollectionPage = () => {
 
   useEffect(() => {
     if (collection) {
-      form.reset({ ...collection, editorState: collection.description });
+      form.reset({ ...collection });
     }
   }, [collection, form]);
   const onUpdateCollection = (values: TCollection) =>
-    updateCollection(id!, values)
+    updateCollection(id!, { ...transformDraftToStr({ ...values }) })
       .then(() =>
         enqueueSnackbar(translate('common.200'), {
           variant: 'success'

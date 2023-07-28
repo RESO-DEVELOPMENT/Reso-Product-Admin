@@ -14,6 +14,7 @@ import Page from '../../components/Page';
 import useDashboard from '../../hooks/useDashboard';
 import { DashboardNavLayout } from '../../layouts/dashboard/DashboardNavbar';
 import MiddleForm from './components/MiddleForm';
+import { transformDraftToStr } from './utils';
 
 // import { validationSchema } from './type';
 
@@ -39,7 +40,7 @@ const CreateProduct = () => {
 
   const onSubmit = async (values: TProductCreate) => {
     const data = {
-      ...values
+      ...transformDraftToStr({ ...values })
     };
     if (data.type === ProductTypeEnum.CHILD) {
       await productApi

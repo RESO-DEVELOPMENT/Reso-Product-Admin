@@ -23,6 +23,7 @@ import { useProductDetail } from 'hooks/products/useProduct';
 import productApi from 'api/product';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import ChoiceGroupComboForm from './Combos/components/form/ChoiceGroupComboForm';
+import { transformDraftToStr } from './utils';
 
 const UpdateProduct = () => {
   const [currentProduct, setCurrentProduct] = React.useState<TProductBase | null>(null);
@@ -127,12 +128,12 @@ const UpdateProduct = () => {
   useEffect(() => {
     if (!productDetails) return;
 
-    form.reset({ ...productDetails, editorState: productDetails.description });
+    form.reset({ ...productDetails });
   }, [productDetails, form]);
 
   const onSubmit = (values: TProduct) => {
     return productApi
-      .update(id!, values)
+      .update(id!, { ...transformDraftToStr({ ...values }) })
       .then((res) => {
         enqueueSnackbar(`Cập nhật thành công ${values.name}`, {
           variant: 'success'
